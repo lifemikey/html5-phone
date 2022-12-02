@@ -18,9 +18,11 @@
     var ax = 0, ay = 0, az = 0, oa = 0, ob = 0, og = 0;
 
 	var client;
-    var orgId;
+    var orgId = "masdev";
 	var clientId;
-    var password;
+	var deviceType = "mas-phone"
+	var deviceId = "MLL_iphone"
+	var password = "Pasword1!";
     var useSSL = true;
     var mqttPort = 443;
     var mqttPortSecure = 443;
@@ -70,7 +72,10 @@
 		navigator.geolocation.watchPosition(updatePersonalLocation);
 	}
 
-	function getId() {
+	console.log("Connecting with device id: " + deviceId);
+	getDeviceCredentials();
+
+/*	function getId() {
 
 		window.deviceId = prompt("Enter a unique ID of at least 8 characters containing only letters and numbers:");
 		if (deviceIdRegEx.test(window.deviceId) === true) {
@@ -84,13 +89,14 @@
 			getId();
 		}
 	}
+	*/
 
     function publish() {
     	// We only attempt to publish if we're actually connected, saving CPU and battery
 		if (isConnected) {
 	    	var payload = {
 	            "d": {
-					"id": window.deviceId,
+					"id": deviceId,
 					"ts": (new Date()).getTime(),
 					"lat": parseFloat(window.lat),
 					"lng": parseFloat(window.lng),
@@ -146,7 +152,18 @@
 		});
     }
 
-    function getDeviceCredentials() {
+	clientId = "d:"+orgId+":"+deviceType+":"+deviceId;
+
+	client = new Paho.MQTT.Client(orgId+".messaging.iot.demo2.monitordemo2-822c5cdfc486f5db3c3145c89ca6409d-0000.us-south.containers.appdomain.cloud", useSSL ? mqttPortSecure : mqttPort, clientId);
+
+	console.log("Attempting connect");
+
+	connectDevice(client);
+
+	setInterval(publish, 100);
+
+
+   /* function getDeviceCredentials() {
 		$.ajax({
 			url: "/credentials/"+window.deviceId,
 			type: "GET",
@@ -154,8 +171,7 @@
 			dataType: "json",
 			success: function(response){
 				orgId = response.org;
-				clientId = "d:"+orgId+":"+response.deviceType+":"+response.deviceId;
-				password = response.token;
+				clientId = "d:"+orgId+":"+deviceType+":"+deviceId;
 
 				client = new Paho.MQTT.Client(orgId+".messaging.iot.demo2.monitordemo2-822c5cdfc486f5db3c3145c89ca6409d-0000.us-south.containers.appdomain.cloud", useSSL ? mqttPortSecure : mqttPort, clientId);
 
@@ -180,7 +196,7 @@
     $(document).ready(function() {
 		// prompt the user for id
 		getId();
-    });
+    });*/
 
 	function changeConnectionStatusImage(image) {
         document.getElementById("connectionImage").src=image;

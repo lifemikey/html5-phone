@@ -19,33 +19,6 @@ var express = require('express'),
     http = require('http'),
     https = require('https');
 var app = express();
-var Cloudant = require('@cloudant/cloudant');
-
-if (process.env.VCAP_SERVICES) {
-	var env = JSON.parse(process.env.VCAP_SERVICES);
-	console.log(env);
-
-	if (env["cloudantNoSQLDB"])
-	{
-		db_props = env['cloudantNoSQLDB'][0]['credentials'];
-		console.log(db_props);
-	}
-	else {
-		console.log('You must bind the Cloudant DB to this application');
-	}
-
-	if (env["iotf-service"])
-	{
-		iot_props = env['iotf-service'][0]['credentials'];
-		console.log(iot_props);
-	}
-	else
-	{
-		console.log('You must bind the Internet of Things service to this application');
-	}
-}
-
-var appInfo = JSON.parse(process.env.VCAP_APPLICATION || "{}");
 
 var iot_server = "messaging.iot.demo2.monitordemo2-822c5cdfc486f5db3c3145c89ca6409d-0000.us-south.containers.appdomain.cloud";
 var iot_org = "masdev";
