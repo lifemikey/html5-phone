@@ -14,7 +14,6 @@
  *   Bryan Boyd - Initial implementation 
  *******************************************************************************/
 
-var http = require('http');
 var express = require('express'),
     path = require('path'),
     http = require('http'),
@@ -48,9 +47,9 @@ if (process.env.VCAP_SERVICES) {
 
 var appInfo = JSON.parse(process.env.VCAP_APPLICATION || "{}");
 
-var iot_server = iot_props["mqtt_host"];
-var iot_org = iot_props["org"];
-var iot_port = iot_props["mqtt_u_port"];
+var iot_server = "messaging.iot.demo2.monitordemo2-822c5cdfc486f5db3c3145c89ca6409d-0000.us-south.containers.appdomain.cloud";
+var iot_org = "masdev";
+var iot_port = 443;
 var iot_username = "use-token-auth";
 
 var device_type = "iotphone";
@@ -104,7 +103,7 @@ function getUserCredentials(deviceId, callback) {
 			// register device type
 			var typeData = JSON.stringify({id:"iotphone"});
 			var typeOpts = {
-				host: iot_props.org + '.internetofthings.ibmcloud.com',
+				host: iot_props.org + '.iot.demo2.monitordemo2-822c5cdfc486f5db3c3145c89ca6409d-0000.us-south.containers.appdomain.cloud',
 				port: 443,
 				method: 'POST',
 				headers: {
@@ -115,7 +114,7 @@ function getUserCredentials(deviceId, callback) {
 			};
 			var deviceData = JSON.stringify({deviceId:deviceId,authToken:deviceId});
 			var deviceOpts = {
-				host: iot_props.org + '.internetofthings.ibmcloud.com',
+				host: iot_props.org + '.iot.demo2.monitordemo2-822c5cdfc486f5db3c3145c89ca6409d-0000.us-south.containers.appdomain.cloud',
 				port: 443,
 				method: 'POST',
 				headers: {

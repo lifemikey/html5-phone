@@ -1,15 +1,11 @@
 declared-services:
   iot-phone-cloudant-cloudantNoSQLDB:
     label: cloudantNoSQLDB
-    plan: Lite
-  iot-phone-iotf-service:
-    label: iotf-service
-    plan: iotf-service-free
+    plan: Paid
 
 applications:
 - services:
   - iot-phone-cloudant-cloudantNoSQLDB
-  - iot-phone-iotf-service
   name: iot-phone
   random-route: true
   disk: 128M
