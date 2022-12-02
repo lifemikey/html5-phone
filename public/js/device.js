@@ -14,16 +14,14 @@
  *   Bryan Boyd - Initial implementation
  *	 Alan Blyth - Modified to favour SSL over port 8883
  *******************************************************************************/
-
 (function(window){
     var ax = 0, ay = 0, az = 0, oa = 0, ob = 0, og = 0;
 
 	var client;
-    var orgId = "masdev";
-	var clientId;
+    var orgId = "masdev"
 	var deviceType = "mas-phone"
-	var deviceId = "MLL_iphone"
-	var password = "Pasword1!";
+	var clientId;
+    var password = "Pasword1!"
     var useSSL = true;
     var mqttPort = 443;
     var mqttPortSecure = 443;
@@ -73,12 +71,13 @@
 		navigator.geolocation.watchPosition(updatePersonalLocation);
 	}*/
 
-/*	function getId() {
+	function getId() {
 
 		window.deviceId = prompt("Enter a unique ID of at least 8 characters containing only letters and numbers:");
 		if (deviceIdRegEx.test(window.deviceId) === true) {
 			console.log("Connecting with device id: " + window.deviceId);
 			$("#deviceId").html(window.deviceId);
+			deviceId = "MLL_iphone2"
 			getDeviceCredentials();
 		}
 		else
@@ -87,14 +86,13 @@
 			getId();
 		}
 	}
-	*/
 
     function publish() {
     	// We only attempt to publish if we're actually connected, saving CPU and battery
 		if (isConnected) {
 	    	var payload = {
 	            "d": {
-					"id": deviceId,
+					"id": window.deviceId,
 					"ts": (new Date()).getTime(),
 					"lat": parseFloat(window.lat),
 					"lng": parseFloat(window.lng),
@@ -106,7 +104,7 @@
 					"og": parseFloat(og.toFixed(2))
 				}
 	        };
-	        var message = new mqtt.Message(JSON.stringify(payload));
+	        var message = new Paho.MQTT.Message(JSON.stringify(payload));
 	        message.destinationName = topic;
 	       	try {
 			     client.send(message);
@@ -150,27 +148,8 @@
 		});
     }
 
-	clientId = "d:"+orgId+":"+deviceType+":"+deviceId;
-	console.log("Connecting with device id: " + clientId);
-
-	client = new mqtt.Client(orgId+".messaging.iot.demo2.monitordemo2-822c5cdfc486f5db3c3145c89ca6409d-0000.us-south.containers.appdomain.cloud", useSSL ? mqttPortSecure : mqttPort, clientId);
-
-	console.log("Attempting connect");
-	connectDevice(client);
-	console.log("AFTER connectDevice");
-	setInterval(publish, 100);
-	console.log("AFTER setInterval");
-
-   /* function getDeviceCredentials() {
-		$.ajax({
-			url: "/credentials/"+window.deviceId,
-			type: "GET",
-			contentType: "application/json; charset=utf-8",
-			dataType: "json",
-			success: function(response){
-				orgId = response.org;
-				clientId = "d:"+orgId+":"+deviceType+":"+deviceId;
-
+    function getDeviceCredentials() {
+				clientId = "d:"+orgId+":"+deviceType+":"+window.deviceId;
 				client = new Paho.MQTT.Client(orgId+".messaging.iot.demo2.monitordemo2-822c5cdfc486f5db3c3145c89ca6409d-0000.us-south.containers.appdomain.cloud", useSSL ? mqttPortSecure : mqttPort, clientId);
 
 				console.log("Attempting connect");
@@ -178,23 +157,12 @@
 				connectDevice(client);
 
 				setInterval(publish, 100);
-			},
-			error: function(xhr, status, error) {
-				if (xhr.status==403) {
-					// Authentication check succeeded and told us we're invalid
-					alert("Incorrect code!");
-				} else {
-					// Something else went wrong
-					alert("Failed to authenticate! "+error);
-				}
-			}
-		});
     }
 
     $(document).ready(function() {
 		// prompt the user for id
 		getId();
-    });*/
+    });
 
 	function changeConnectionStatusImage(image) {
         document.getElementById("connectionImage").src=image;

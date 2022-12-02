@@ -17,8 +17,8 @@
 var express = require('express'),
     path = require('path'),
     http = require('http'),
-    https = require('https'),
-	mqtt = require('mqtt');
+    https = require('https');
+
 var app = express();
 
 var iot_server = "messaging.iot.demo2.monitordemo2-822c5cdfc486f5db3c3145c89ca6409d-0000.us-south.containers.appdomain.cloud";

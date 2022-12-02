@@ -833,9 +833,9 @@ Paho.MQTT = (function (global) {
 		this._trace("Client.connect", connectOptionsMasked, this.socket, this.connected);
 		
 		if (this.connected) 
-			throw new Error(format(ERROR.INVALID_STATE, ["already connected"]));
+		  throw new Error(format(ERROR.INVALID_STATE, ["already connected"]));
 		if (this.socket)
-			throw new Error(format(ERROR.INVALID_STATE, ["already connected"]));
+		  throw new Error(format(ERROR.INVALID_STATE, ["already connected"]));
 		
 		this.connectOptions = connectOptions;
 		
