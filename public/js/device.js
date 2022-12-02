@@ -156,7 +156,9 @@
 
 	console.log("Attempting connect");
 	connectDevice(client);
+	console.log("AFTER connectDevice");
 	setInterval(publish, 100);
+	console.log("AFTER setInterval");
 
 
    /* function getDeviceCredentials() {
