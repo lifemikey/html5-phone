@@ -63,7 +63,7 @@ app.use(express.methodOverride());
 app.use(app.router);
 app.use(express.static(path.join(__dirname, 'public')));
 
-var device_credentials = null;
+/*var device_credentials = null;
 var dbName = 'device_credentials';
 Cloudant({account:db_props.username, password:db_props.password}, function(err, cloudant) {
 	console.log('Connected to Cloudant')
@@ -81,6 +81,7 @@ Cloudant({account:db_props.username, password:db_props.password}, function(err, 
 	    }
 	})
 })
+*/
 
 app.get('/credentials/:deviceId', function(req, res) {
 	var deviceId = req.params.deviceId;
@@ -92,12 +93,7 @@ app.get('/credentials/:deviceId', function(req, res) {
 });
 
 function getUserCredentials(deviceId, callback) {
-	// check to see if this device exists in the DB
-	device_credentials.get(deviceId, function(err, body) {
-		if (!err) {
-			console.log("Found doc: ", body, body.token);
-			callback({ deviceType: device_type, deviceId: deviceId, token: body.token, org: iot_org });
-		} else {
+
 			// register with IoT Foundation, return credentials
 
 			// register device type
@@ -161,9 +157,7 @@ function getUserCredentials(deviceId, callback) {
 			}).on('error', function(e) { console.log ("got error, " + e); });
 			deviceType_req.write(typeData);
 			deviceType_req.end();
-		}
-	});
-}
+	}
 
 http.createServer(app).listen(app.get('port'), function(){
 	console.log('Express server listening on port ' + app.get('port'));
