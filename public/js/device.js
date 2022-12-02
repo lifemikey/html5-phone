@@ -72,9 +72,6 @@
 		navigator.geolocation.watchPosition(updatePersonalLocation);
 	}
 
-	console.log("Connecting with device id: " + deviceId);
-	getDeviceCredentials();
-
 /*	function getId() {
 
 		window.deviceId = prompt("Enter a unique ID of at least 8 characters containing only letters and numbers:");
@@ -153,13 +150,12 @@
     }
 
 	clientId = "d:"+orgId+":"+deviceType+":"+deviceId;
+	console.log("Connecting with device id: " + clientId);
 
 	client = new Paho.MQTT.Client(orgId+".messaging.iot.demo2.monitordemo2-822c5cdfc486f5db3c3145c89ca6409d-0000.us-south.containers.appdomain.cloud", useSSL ? mqttPortSecure : mqttPort, clientId);
 
 	console.log("Attempting connect");
-
 	connectDevice(client);
-
 	setInterval(publish, 100);
 
 
