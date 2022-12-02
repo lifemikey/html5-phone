@@ -15,10 +15,7 @@
  *	 Alan Blyth - Modified to favour SSL over port 8883
  *******************************************************************************/
 
-
-
 (function(window){
-	var mqtt = require('mqtt');
     var ax = 0, ay = 0, az = 0, oa = 0, ob = 0, og = 0;
 
 	var client;
