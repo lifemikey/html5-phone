@@ -77,7 +77,7 @@
 		if (deviceIdRegEx.test(window.deviceId) === true) {
 			console.log("Connecting with device id: " + window.deviceId);
 			$("#deviceId").html(window.deviceId);
-			deviceId = "MLL_iphone2"
+			//deviceId = "MLLiphone3"
 			getDeviceCredentials();
 		}
 		else
@@ -91,8 +91,7 @@
     	// We only attempt to publish if we're actually connected, saving CPU and battery
 		if (isConnected) {
 	    	var payload = {
-	            "d": {
-					"id": window.deviceId,
+					//"id": window.deviceId,
 					"ts": (new Date()).getTime(),
 					"lat": parseFloat(window.lat),
 					"lng": parseFloat(window.lng),
@@ -102,7 +101,6 @@
 					"oa": parseFloat(oa.toFixed(2)),
 					"ob": parseFloat(ob.toFixed(2)),
 					"og": parseFloat(og.toFixed(2))
-				}
 	        };
 	        var message = new Paho.MQTT.Message(JSON.stringify(payload));
 	        message.destinationName = topic;
