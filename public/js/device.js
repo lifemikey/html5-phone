@@ -61,7 +61,7 @@
 
 	window.msgCount = 0;
 
-	var updatePersonalLocation = function(position) {
+	/*var updatePersonalLocation = function(position) {
 		window.lat = position.coords.latitude;
 		window.lng = position.coords.longitude;
 		$("#lat").html(window.lat.toFixed(6));
@@ -70,7 +70,7 @@
 
 	if (navigator.geolocation) {
 		navigator.geolocation.watchPosition(updatePersonalLocation);
-	}
+	}*/
 
 /*	function getId() {
 
