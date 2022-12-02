@@ -14,6 +14,9 @@
  *   Bryan Boyd - Initial implementation
  *	 Alan Blyth - Modified to favour SSL over port 8883
  *******************************************************************************/
+
+ const mqtt = require('mqtt')
+
 (function(window){
     var ax = 0, ay = 0, az = 0, oa = 0, ob = 0, og = 0;
 
@@ -105,7 +108,7 @@
 					"og": parseFloat(og.toFixed(2))
 				}
 	        };
-	        var message = new Paho.MQTT.Message(JSON.stringify(payload));
+	        var message = new mqtt.Message(JSON.stringify(payload));
 	        message.destinationName = topic;
 	       	try {
 			     client.send(message);
@@ -152,7 +155,7 @@
 	clientId = "d:"+orgId+":"+deviceType+":"+deviceId;
 	console.log("Connecting with device id: " + clientId);
 
-	client = new Paho.MQTT.Client(orgId+".messaging.iot.demo2.monitordemo2-822c5cdfc486f5db3c3145c89ca6409d-0000.us-south.containers.appdomain.cloud", useSSL ? mqttPortSecure : mqttPort, clientId);
+	client = new mqtt.Client(orgId+".messaging.iot.demo2.monitordemo2-822c5cdfc486f5db3c3145c89ca6409d-0000.us-south.containers.appdomain.cloud", useSSL ? mqttPortSecure : mqttPort, clientId);
 
 	console.log("Attempting connect");
 	connectDevice(client);
