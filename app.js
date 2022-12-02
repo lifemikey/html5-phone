@@ -56,7 +56,7 @@ Cloudant({account:db_props.username, password:db_props.password}, function(err, 
 })
 */
 
-app.get('/credentials/:deviceId', function(req, res) {
+/*app.get('/credentials/:deviceId', function(req, res) {
 	var deviceId = req.params.deviceId;
 	var token = getUserCredentials(deviceId, (function(_req, _res) {
 		return function(json) {
@@ -131,6 +131,7 @@ function getUserCredentials(deviceId, callback) {
 			deviceType_req.write(typeData);
 			deviceType_req.end();
 	}
+	*/
 
 http.createServer(app).listen(app.get('port'), function(){
 	console.log('Express server listening on port ' + app.get('port'));
