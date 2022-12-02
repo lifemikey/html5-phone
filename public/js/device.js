@@ -160,7 +160,6 @@
 	setInterval(publish, 100);
 	console.log("AFTER setInterval");
 
-
    /* function getDeviceCredentials() {
 		$.ajax({
 			url: "/credentials/"+window.deviceId,
