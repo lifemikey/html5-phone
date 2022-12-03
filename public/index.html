@@ -38,7 +38,7 @@ function getAccel(){
         if (response == 'granted') {
        // Add a listener to get smartphone orientation 
            // in the alpha-beta-gamma axes (units in degrees)
-            window.addEventListener('deviceorientation',(event) => {
+           /* window.addEventListener('deviceorientation',(event) => {
                 // Expose each orientation angle in a more readable way
                 rotation_degrees = event.alpha;
                 frontToBack_degrees = event.beta;
@@ -66,15 +66,19 @@ function getAccel(){
                 dot.setAttribute('style', "left:" + (px) + "%;" +
                                               "top:" + (py) + "%;");
                 
-            });
+            });*/
+			console.log("Acceleration granted");
         }
     });
 }
 	</script>
 
+<script type="text/javascript">
+	getAccel();
+</script>
+
 	<div class="outer-main">
-		<div id="main" class="main">
-			<button id="accelPermsButton"  style="height:50px;" onclick="getAccel()"><h1>Get Accelerometer Permissions</h1></button>
+			<!-- <button id="accelPermsButton"  style="height:50px;" onclick="getAccel()"><h1>Get Accelerometer Permissions</h1></button> -->
 	
 			<h1>Your device ID:</h1>
 			<h2><span id="deviceId"></span></h2>
