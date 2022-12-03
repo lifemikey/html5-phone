@@ -18,7 +18,11 @@
     var ax = 0, ay = 0, az = 0, oa = 0, ob = 0, og = 0;
 
 	var client;
-    var orgId = "masdev"
+ // var orgId = "masdev"
+  //var mqtthost = "messaging.iot.demo2.monitordemo2-822c5cdfc486f5db3c3145c89ca6409d-0000.us-south.containers.appdomain.cloud"
+var orgId = "main"
+var mqtthost = "messaging.iot.maspreivt89.ivt.suite.maximo.com"
+
 	var deviceType = "mas-phone"
 	var clientId;
     var password = "Pasword1!"
@@ -148,9 +152,10 @@
 
     function getDeviceCredentials() {
 				clientId = "d:"+orgId+":"+deviceType+":"+window.deviceId;
-				client = new Paho.MQTT.Client(orgId+".messaging.iot.demo2.monitordemo2-822c5cdfc486f5db3c3145c89ca6409d-0000.us-south.containers.appdomain.cloud", useSSL ? mqttPortSecure : mqttPort, clientId);
+				mqttroute = orgId+"."+mqtthost;
+				client = new Paho.MQTT.Client(mqttroute, useSSL ? mqttPortSecure : mqttPort, clientId);
 
-				console.log("Attempting connect");
+				console.log("Attempting connect to " + mqttroute);
 
 				connectDevice(client);
 
