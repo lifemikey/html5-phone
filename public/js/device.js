@@ -37,6 +37,8 @@ var mqtthost = "messaging.iot.maspreivt89.ivt.suite.maximo.com"
 	window.lat = 0;
 	window.lng = 0;
 
+	
+
     window.ondevicemotion = function(event) {
         ax = parseFloat((event.acceleration.x || 0));
         ay = parseFloat((event.acceleration.y || 0));
@@ -159,7 +161,7 @@ var mqtthost = "messaging.iot.maspreivt89.ivt.suite.maximo.com"
 
 				connectDevice(client);
 
-				setInterval(publish, 100);
+				setInterval(publish, 10000);
     }
 
     $(document).ready(function() {

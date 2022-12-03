@@ -21,8 +21,8 @@ var express = require('express'),
 
 var app = express();
 
-var iot_server = "messaging.iot.demo2.monitordemo2-822c5cdfc486f5db3c3145c89ca6409d-0000.us-south.containers.appdomain.cloud";
-var iot_org = "masdev";
+//var iot_server = "messaging.iot.demo2.monitordemo2-822c5cdfc486f5db3c3145c89ca6409d-0000.us-south.containers.appdomain.cloud";
+//var iot_org = "masdev";
 var iot_port = 443;
 var iot_username = "use-token-auth";
 
