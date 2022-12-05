@@ -24,19 +24,21 @@
 <body>
 	<script type="text/javascript">
 		window.deviceId = "myphone";
+    </script>
 
-        function getIOSAccelPerm(){
+	<script>
+		function getIOSAccelPerm(){
            DeviceMotionEvent.requestPermission().then(response => {
              if (response == 'granted') {
 		     	console.log("IOS Acceleration granted");
               }
             });
          }
-    </script>
+	</script>
 
-<script type="text/javascript">
-	getIOSAccelPerm();
-</script>
+    <script type="text/javascript">
+	   getIOSAccelPerm();
+    </script>
 
 	<div class="outer-main">
 		<div id="main" class="main">
