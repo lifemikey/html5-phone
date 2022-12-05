@@ -35,14 +35,6 @@
 	window.lat = 0;
 	window.lng = 0;
 
-	function getIOSAccelPerm(){
-		DeviceMotionEvent.requestPermission().then(response => {
-		  if (response == 'granted') {
-			  console.log("IOS Acceleration granted");
-		   }
-		 });
-	  }
-
     window.ondevicemotion = function(event) {
         ax = parseFloat((event.acceleration.x || 0));
         ay = parseFloat((event.acceleration.y || 0));
