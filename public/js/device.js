@@ -42,7 +42,7 @@
 		   }
 		 });
 	  }
-	  
+
     window.ondevicemotion = function(event) {
         ax = parseFloat((event.acceleration.x || 0));
         ay = parseFloat((event.acceleration.y || 0));
@@ -169,12 +169,13 @@
         document.getElementById("connectionImage").src=image;
     }
 
-
     $(document).ready(function() {
-		// prompt the user for id
-		const btn = document.getElementById( "request" );
-        btn.addEventListener( "click", getIOSAccelPerm );
+		// prompt the user for device id
 		getDeviceId();
+			
     });
+
+	const btn = document.getElementById("btnIOSAccelPerm");
+    btn.addEventListener( "click", getIOSAccelPerm );
 
 }(window));
