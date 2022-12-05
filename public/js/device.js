@@ -42,7 +42,7 @@
 		   }
 		 });
 	  }
-
+	  
     window.ondevicemotion = function(event) {
         ax = parseFloat((event.acceleration.x || 0));
         ay = parseFloat((event.acceleration.y || 0));
@@ -172,7 +172,8 @@
 
     $(document).ready(function() {
 		// prompt the user for id
-		getIOSAccelPerm();
+		const btn = document.getElementById( "request" );
+        btn.addEventListener( "click", getIOSAccelPerm );
 		getDeviceId();
     });
 
