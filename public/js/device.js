@@ -18,6 +18,9 @@
     
     // "masdev"
     // "messaging.iot.demo2.monitordemo2-822c5cdfc486f5db3c3145c89ca6409d-0000.us-south.containers.appdomain.cloud"
+
+	var isAndroid = false;
+	var isIOS = false;
 	var mqttClient;
     var orgId = "main"
     var messagingRoute = "messaging.iot"
@@ -162,6 +165,30 @@
     }
 
     $(document).ready(function() {
+		
+		/*** sniff the UA of the client and show hidden div's for that device ***/
+		var customizeForDevice = function(){
+		var ua = navigator.userAgent;
+		var checker = {
+		iphone: ua.match(/(iPhone|iPod|iPad)/),
+		android: ua.match(/Android/)
+		};
+		if (checker.android){
+			$('.android-only').show();
+			isAndroid = true;
+
+		}
+		else if (checker.iphone){
+			$('.idevice-only').show();
+			isIOS = true;
+		}
+		else {
+			$('.unknown-device').show();
+		}
+}
+		customizeForDevice();
+		console.log("Android Device: " + isAndroid);
+		console.log("IOS Device: " + isIOS);
 		// prompt the user for device id
 		getDeviceId();		
     });
