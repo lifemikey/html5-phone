@@ -172,12 +172,10 @@
     $(document).ready(function() {
 		// prompt the user for device id
 		getDeviceId();
-			
+		console.log("BEFORE btnIOSAccelPerm");
+	    const btn = document.getElementById("btnIOSAccelPerm");
+        btn.addEventListener( "click", getIOSAccelPerm );
+	    console.log("AFTER btnIOSAccelPerm");		
     });
-
-	console.log("BEFORE btnIOSAccelPerm");
-	const btn = document.getElementById("btnIOSAccelPerm");
-    btn.addEventListener( "click", getIOSAccelPerm );
-	console.log("AFTER btnIOSAccelPerm");
 
 }(window));
