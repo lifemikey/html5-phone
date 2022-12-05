@@ -102,7 +102,7 @@
 		else
 		{
 			window.alert("Device ID must be atleast 8 characters in length, and contain only letters and numbers.");
-			getId();
+			getDeviceId();
 		}
 	}
 
@@ -171,11 +171,7 @@
 
     $(document).ready(function() {
 		// prompt the user for device id
-		getDeviceId();
-		console.log("BEFORE btnIOSAccelPerm");
-	    const btn = document.getElementById("btnIOSAccelPerm");
-        btn.addEventListener( "click", getIOSAccelPerm );
-	    console.log("AFTER btnIOSAccelPerm");		
+		getDeviceId();		
     });
 
 }(window));
