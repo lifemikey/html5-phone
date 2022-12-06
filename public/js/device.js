@@ -176,7 +176,6 @@
 		if (checker.android){
 			$('.android-only').show();
 			isAndroid = true;
-
 		}
 		else if (checker.iphone){
 			$('.idevice-only').show();
