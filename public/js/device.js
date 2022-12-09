@@ -116,7 +116,7 @@ function publish() {
 		}
 		catch (err) {
 			isConnected = false;
-			changeConnectionStatusImage("/images/disconnected.svg");
+			document.getElementById("connectionImage").src="/images/disconnected.svg";
 			document.getElementById("connection").innerHTML = "Disconnected";
 			setTimeout(connectDevice(mqttClient), 1000);
 		}
@@ -127,9 +127,9 @@ function onConnectSuccess(){
 	// The device connected successfully
 	console.log("Connected Successfully!");
 	isDeviceConnected = true;
-	changeConnectionStatusImage("/images/connected.svg");
+	document.getElementById("connectionImage").src="/images/connected.svg";
 	document.getElementById("connection").innerHTML = "Connected";
-	document.getElementById("device").innerHTML = device;
+	document.querySelector('#connectbutton').disabled = true;
 	$("#publish,#metricstable").show('slow');
 }
 
@@ -140,7 +140,7 @@ function onConnectFailure(){
 }
 
 function connectDevice(mqttClient){
-	changeConnectionStatusImage("/images/connecting.svg");
+	document.getElementById("connectionImage").src="/images/connecting.svg";
 	document.getElementById("connection").innerHTML = "Connecting";
 	console.log("Connecting device to MAS");
 	mqttClient.connect({
@@ -152,9 +152,6 @@ function connectDevice(mqttClient){
 	});
 }
 
-function changeConnectionStatusImage(image) {
-	document.getElementById("connectionImage").src=image;
-}
 
 var mqttClient;
     //var orgId = "main"

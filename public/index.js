@@ -1,7 +1,4 @@
 
-
-
-
 // show a message with a type of the input
 function showMessage(input, message, type) {
     // get the small element and set the message
@@ -109,20 +106,19 @@ configureForm.addEventListener("submit", function (event) {
         
         console.log("configuration valid");
         getMqttClient();
+
+        getTypeMobileDevice();
+        if (isIOSDevice)
+        {
+           let btn = document.createElement("button");
+           btn.id = "enableIOSAcceleration"
+           btn.className = "data-title"
+           btn.innerHTML = "Enable IOS Acceleration";
+           document.body.appendChild(btn);
+           btn.addEventListener("click", getIOSAccelPerm());
+        }
     }
 })
-
-getTypeMobileDevice();
-if (isIOSDevice)
-{
-    let btn = document.createElement("button");
-    btn.id = "enableIOSAcceleration"
-    btn.className = "data-title"
-    btn.innerHTML = "Enable IOS Acceleration";
-    document.body.appendChild(btn);
-    btn.addEventListener("click", getIOSAccelPerm());
-}
-
 })
 
 
