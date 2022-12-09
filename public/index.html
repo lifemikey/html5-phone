@@ -17,38 +17,70 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>IoT Phone</title>
-  <link rel='stylesheet' href='/stylesheets/device.css'/>
+  <title>MAS Mobile Device Ingestor</title>
+  <h1>MAS Mobile Device Ingestor</h1>
+  <link rel="stylesheet" href="stylesheets/device.css" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <script type="text/javascript" src="js/device.js"></script>
+  <script type="text/javascript" src="js/jquery.min.js"></script>
+  <script type="text/javascript" src="js/mqttws31.js"></script>
+  <script type="text/javascript" src="index.js"></script>
+
 </head>
 <body>
-
-	<script type="text/javascript">
-		window.deviceId = "myphone";
-    </script>
-
-	<script>
-		function getIOSAccelPerm(){
-			DeviceMotionEvent.requestPermission().then(response => {
-		  		if (response == 'granted') {
-			  	console.log("IOS Acceleration granted");
-			}
-		 });
-	  }
-	</script>
+	<br>
+	<div class="container">
+		<form id="configure-form">
+			<h2>Configure</h2>
+			<div class="field">
+				Enter Device Type name that you created in Monitor setup
+				<br>
+				<label for="devicetype">Device Type:</label>
+				<input type="text" id="devicetype" name="devicetype" />
+				<small></small>
+			</div>
+			<br>
+			<div class="field">
+				Enter Device name that you created in Monitor setup
+				<br>
+				<label for="device">Device:</label>
+				<input type="text" id="device" name="device"/>
+				<small></small>
+			</div>
+			<br>
+			<div class="field">
+				Enter Device Password that was set or generated when you created the device in Monitor setup
+				<br>
+				<label for="devicepassword">Device Password:</label>
+				<input type="text" id="devicepassword" name="devicepassword"/>
+				<small></small>
+			</div>
+			<br>
+			<div class="field">
+				Enter the Messaging Hostname from OpenShift console in Networking -> Routes
+				<br>
+				<label for="msghostname">Messaging Hostname:</label>
+				<input type="text" id="msghostname" name="msghostname"/>
+				<small></small>
+			</div>
+			<br>
+			<div class="field">
+				<button type="submit" class="main">Connect</button>
+			</div>
+			<br>
+		</form>
+	</div>
 
 	<div class="outer-main">
-		<div id="main" class="main">
-			<button id="accelPermsButton" class="data-title" style="height:50px;" onclick="getIOSAccelPerm()">Get Accelerometer Permissions</button></div>
-			<h1>Your device ID:</h1>
-			<h2><span id="deviceId"></span></h2>
+		<div id="publish" class="main">
+			<br>
 			<p style="padding-top:10px">
-    			<img id="connectionImage" src="/images/disconnected.svg" class="iot-connected-image" style="vertical-align:middle">
+    			<img id="connectionImage" src="images/disconnected.svg" class="iot-connected-image" style="vertical-align:middle">
     			<span id="connection">Disconnected</span>
 			</p>​
 			<h3>Published Messages: <span id='msgCount'></h3>
 		</div>
-		<div class="main">
+		<div class="main" id="metricstable">
 			<table class="data-table">
 				<tr class="table-title">
 					<th colspan="3">Movement</th>
@@ -96,9 +128,5 @@
 		<div class="iot-footer-pad"></div>
 	</div>
 	
-	<!-- Please do not change the order of these links as some depend on each other -->
-	<script type="text/javascript" src="/js/jquery.min.js"></script>
-	<script type="text/javascript" src="/js/mqttws31.js"></script>
-	<script type="text/javascript" src="/js/device.js"></script>
 </body>
 </html>

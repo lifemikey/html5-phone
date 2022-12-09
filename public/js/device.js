@@ -14,27 +14,14 @@
  *   Bryan Boyd - Initial implementation
  *	 Alan Blyth - Modified to favour SSL over port 8883
  *******************************************************************************/
-(function(window){
+
+ var ax = 0, ay = 0, az = 0, oa = 0, ob = 0, og = 0;
+ 
+ (function(window){
     
     // "masdev"
     // "messaging.iot.demo2.monitordemo2-822c5cdfc486f5db3c3145c89ca6409d-0000.us-south.containers.appdomain.cloud"
 
-	var isAndroid = false;
-	var isIOS = false;
-	var mqttClient;
-    var orgId = "main"
-    var messagingRoute = "messaging.iot"
-	var masHost = "maspreivt89.ivt.suite.maximo.com"
-	var mqttPort = 443;
-
-	var deviceType = "mas-phone"
-    var devicePassword = "Pasword1!"
-    var deviceIdRegEx = /^([a-zA-Z0-9]){8,}$/;
-
-	var mqttTopic = "iot-2/evt/sensorData/fmt/json";
-    var isDeviceConnected = false;
-
-	var ax = 0, ay = 0, az = 0, oa = 0, ob = 0, og = 0;
 	window.lat = 0;
 	window.lng = 0;
 
@@ -76,17 +63,7 @@
 		navigator.geolocation.watchPosition(updatePersonalLocation);
 	}
 
-	function getMqttClient() {
-		var clientId = "d:"+orgId+":"+deviceType+":"+window.deviceId;
-		mqttHost = orgId+"."+messagingRoute+"."+masHost;
-		mqttClient = new Paho.MQTT.Client(mqttHost, mqttPort, clientId);
-		console.log("Attempting connect to " + mqttHost);
-
-		connectDevice(mqttClient);
-		setInterval(publish, 1000);
-    }
-
-	function getDeviceId() {
+	/*function getDeviceId() {
 
 		window.deviceId = prompt("Enter a unique ID of at least 8 characters containing only letters and numbers:");
 		if (deviceIdRegEx.test(window.deviceId) === true) {
@@ -99,97 +76,117 @@
 			window.alert("Device ID must be atleast 8 characters in length, and contain only letters and numbers.");
 			getDeviceId();
 		}
-	}
+	}*/
 
-    function publish() {
-    	// We only attempt to publish if we're actually connected, saving CPU and battery
-		if (isDeviceConnected) {
-	    	var payload = {
-					//"id": window.deviceId,
-					"ts": (new Date()).getTime(),
-					"lat": parseFloat(window.lat),
-					"lng": parseFloat(window.lng),
-					"ax": parseFloat(ax.toFixed(2)),
-					"ay": parseFloat(ay.toFixed(2)),
-					"az": parseFloat(az.toFixed(2)),
-					"oa": parseFloat(oa.toFixed(2)),
-					"ob": parseFloat(ob.toFixed(2)),
-					"og": parseFloat(og.toFixed(2))
-	        };
-	        var message = new Paho.MQTT.Message(JSON.stringify(payload));
-	        message.destinationName = mqttTopic;
-	       	try {
-			     mqttClient.send(message);
-				 window.msgCount++;
-				 $("#msgCount").html(window.msgCount);
-			     console.log("[%s] Published", new Date().getTime());
-			}
-			catch (err) {
-				isConnected = false;
-				changeConnectionStatusImage("/images/disconnected.svg");
-				document.getElementById("connection").innerHTML = "Disconnected";
-				setTimeout(connectDevice(mqttClient), 1000);
-			}
-		}
+}(window))
+
+
+function getIOSAccelPerm(){
+
+    DeviceMotionEvent.requestPermission().then(response => {
+          if (response == 'granted') {
+			console.log("IOS Acceleration granted");
+			document.getElementById('enableIOSAcceleration').style.visibility = 'hidden';
     }
-
-    function onConnectSuccess(){
-    	// The device connected successfully
-        console.log("Connected Successfully!");
-        isDeviceConnected = true;
-        changeConnectionStatusImage("/images/connected.svg");
-        document.getElementById("connection").innerHTML = "Connected";
-    }
-
-    function onConnectFailure(){
-    	// The device failed to connect. Let's try again in one second.
-        console.log("Could not connect to IoT Foundation! Trying again in one second.");
-        setTimeout(connectDevice(mqttClient), 1000);
-    }
-
-    function connectDevice(mqttClient){
-    	changeConnectionStatusImage("/images/connecting.svg");
-    	document.getElementById("connection").innerHTML = "Connecting";
-    	console.log("Connecting device to IoT Foundation...");
-		mqttClient.connect({
-			onSuccess: onConnectSuccess,
-			onFailure: onConnectFailure,
-			userName: "use-token-auth",
-			password: devicePassword,
-			useSSL: true
-		});
-    }
-
-	function changeConnectionStatusImage(image) {
-        document.getElementById("connectionImage").src=image;
-    }
-
-    $(document).ready(function() {
-		
-		/*** sniff the UA of the client and show hidden div's for that device ***/
-		var customizeForDevice = function(){
-		var ua = navigator.userAgent;
-		var checker = {
-		iphone: ua.match(/(iPhone|iPod|iPad)/),
-		android: ua.match(/Android/)
-		};
-		if (checker.android){
-			$('.android-only').show();
-			isAndroid = true;
-		}
-		else if (checker.iphone){
-			$('.idevice-only').show();
-			isIOS = true;
-		}
-		else {
-			$('.unknown-device').show();
-		}
+ });
 }
-		customizeForDevice();
-		console.log("Android Device: " + isAndroid);
-		console.log("IOS Device: " + isIOS);
-		// prompt the user for device id
-		getDeviceId();		
-    });
 
-}(window));
+function publish() {
+	// We only attempt to publish if we're actually connected, saving CPU and battery
+	if (isDeviceConnected) {
+		var payload = {
+				//"id": window.deviceId,
+				"ts": (new Date()).getTime(),
+				"lat": parseFloat(window.lat),
+				"lng": parseFloat(window.lng),
+				"ax": parseFloat(ax.toFixed(2)),
+				"ay": parseFloat(ay.toFixed(2)),
+				"az": parseFloat(az.toFixed(2)),
+				"oa": parseFloat(oa.toFixed(2)),
+				"ob": parseFloat(ob.toFixed(2)),
+				"og": parseFloat(og.toFixed(2))
+		};
+		var message = new Paho.MQTT.Message(JSON.stringify(payload));
+		message.destinationName = mqttTopic;
+		   try {
+			 mqttClient.send(message);
+			 window.msgCount++;
+			 $("#msgCount").html(window.msgCount);
+			 console.log("[%s] Published", new Date().getTime());
+		}
+		catch (err) {
+			isConnected = false;
+			changeConnectionStatusImage("/images/disconnected.svg");
+			document.getElementById("connection").innerHTML = "Disconnected";
+			setTimeout(connectDevice(mqttClient), 1000);
+		}
+	}
+}
+
+function onConnectSuccess(){
+	// The device connected successfully
+	console.log("Connected Successfully!");
+	isDeviceConnected = true;
+	changeConnectionStatusImage("/images/connected.svg");
+	document.getElementById("connection").innerHTML = "Connected";
+	document.getElementById("device").innerHTML = device;
+	$("#publish,#metricstable").show('slow');
+}
+
+function onConnectFailure(){
+	// The device failed to connect. Let's try again in one second.
+	console.log("Could not connect to MAS! Trying again in one second.");
+	setTimeout(connectDevice(mqttClient), 1000);
+}
+
+function connectDevice(mqttClient){
+	changeConnectionStatusImage("/images/connecting.svg");
+	document.getElementById("connection").innerHTML = "Connecting";
+	console.log("Connecting device to MAS");
+	mqttClient.connect({
+		onSuccess: onConnectSuccess,
+		onFailure: onConnectFailure,
+		userName: "use-token-auth",
+		password: devicePassword,
+		useSSL: true
+	});
+}
+
+function changeConnectionStatusImage(image) {
+	document.getElementById("connectionImage").src=image;
+}
+
+var mqttClient;
+    //var orgId = "main"
+    //var messagingRoute = "messaging.iot"
+	//var masHost = "maspreivt89.ivt.suite.maximo.com"
+var orgId;
+
+var mqttPort = 443;
+
+var deviceType;
+var device;
+var devicePassword;
+var msgHostname;
+var clientId;
+
+	//var deviceType = "mas-phone"
+    //var devicePassword = "Pasword1!"
+
+
+    var deviceIdRegEx = /^([a-zA-Z0-9]){8,}$/;
+
+	var mqttTopic = "iot-2/evt/sensorData/fmt/json";
+    var isDeviceConnected = false;
+
+function getMqttClient() {
+	clientId = "d:"+orgId+":"+deviceType+":"+device;
+	mqttClient = new Paho.MQTT.Client(msgHostname, mqttPort, clientId);
+	console.log("Attempting connection to " + msgHostname + " with clientId " + clientId);
+
+	connectDevice(mqttClient);
+	setInterval(publish, 1000);
+}
+
+
+
