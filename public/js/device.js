@@ -52,16 +52,7 @@
 
 	window.msgCount = 0;
 
-	var updatePersonalLocation = function(position) {
-		window.lat = position.coords.latitude;
-		window.lng = position.coords.longitude;
-		$("#lat").html(window.lat.toFixed(6));
-		$("#lng").html(window.lng.toFixed(6));
-	}
 
-	if (navigator.geolocation) {
-		navigator.geolocation.watchPosition(updatePersonalLocation);
-	}
 
 	/*function getDeviceId() {
 
@@ -131,6 +122,9 @@ function onConnectSuccess(){
 	document.getElementById("connection").innerHTML = "Connected";
 	document.querySelector('#connectbutton').disabled = true;
 	$("#publish,#metricstable").show('slow');
+	if (navigator.geolocation) {
+		navigator.geolocation.watchPosition(updatePersonalLocation);
+	}
 }
 
 function onConnectFailure(){
@@ -150,6 +144,13 @@ function connectDevice(mqttClient){
 		password: devicePassword,
 		useSSL: true
 	});
+}
+
+var updatePersonalLocation = function(position) {
+	window.lat = position.coords.latitude;
+	window.lng = position.coords.longitude;
+	$("#lat").html(window.lat.toFixed(6));
+	$("#lng").html(window.lng.toFixed(6));
 }
 
 
