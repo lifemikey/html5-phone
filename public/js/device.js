@@ -13,14 +13,12 @@
  * Contributors:
  *   Bryan Boyd - Initial implementation
  *	 Alan Blyth - Modified to favour SSL over port 8883
+ *   Mike Lamb -  Modified to work with IOS 13 and connect to the Maximo Application Suite
  *******************************************************************************/
 
  var ax = 0, ay = 0, az = 0, oa = 0, ob = 0, og = 0;
  
  (function(window){
-    
-    // "masdev"
-    // "messaging.iot.demo2.monitordemo2-822c5cdfc486f5db3c3145c89ca6409d-0000.us-south.containers.appdomain.cloud"
 
 	window.lat = 0;
 	window.lng = 0;
@@ -51,23 +49,6 @@
     }
 
 	window.msgCount = 0;
-
-
-
-	/*function getDeviceId() {
-
-		window.deviceId = prompt("Enter a unique ID of at least 8 characters containing only letters and numbers:");
-		if (deviceIdRegEx.test(window.deviceId) === true) {
-			console.log("Connecting with device id: " + window.deviceId);
-			$("#deviceId").html(window.deviceId);
-			getMqttClient();
-		}
-		else
-		{
-			window.alert("Device ID must be atleast 8 characters in length, and contain only letters and numbers.");
-			getDeviceId();
-		}
-	}*/
 
 }(window))
 
@@ -122,6 +103,7 @@ function onConnectSuccess(){
 	document.getElementById("connection").innerHTML = "Connected";
 	document.querySelector('#connectbutton').disabled = true;
 	$("#publish,#metricstable").show('slow');
+
 	if (navigator.geolocation) {
 		navigator.geolocation.watchPosition(updatePersonalLocation);
 	}
@@ -129,14 +111,14 @@ function onConnectSuccess(){
 
 function onConnectFailure(){
 	// The device failed to connect. Let's try again in one second.
-	console.log("Could not connect to MAS! Trying again in one second.");
+	console.log("Could not connect to MAS! Trying again in 1 second.");
 	setTimeout(connectDevice(mqttClient), 1000);
 }
 
 function connectDevice(mqttClient){
 	document.getElementById("connectionImage").src="/images/connecting.svg";
 	document.getElementById("connection").innerHTML = "Connecting";
-	console.log("Connecting device to MAS");
+	
 	mqttClient.connect({
 		onSuccess: onConnectSuccess,
 		onFailure: onConnectFailure,
@@ -155,27 +137,18 @@ var updatePersonalLocation = function(position) {
 
 
 var mqttClient;
-    //var orgId = "main"
-    //var messagingRoute = "messaging.iot"
-	//var masHost = "maspreivt89.ivt.suite.maximo.com"
-var orgId;
-
 var mqttPort = 443;
-
 var deviceType;
 var device;
 var devicePassword;
 var msgHostname;
+var orgId;
 var clientId;
 
-	//var deviceType = "mas-phone"
-    //var devicePassword = "Pasword1!"
+var deviceIdRegEx = /^([a-zA-Z0-9]){8,}$/;
 
-
-    var deviceIdRegEx = /^([a-zA-Z0-9]){8,}$/;
-
-	var mqttTopic = "iot-2/evt/sensorData/fmt/json";
-    var isDeviceConnected = false;
+var mqttTopic = "iot-2/evt/sensorData/fmt/json";
+var isDeviceConnected = false;
 
 function getMqttClient() {
 	clientId = "d:"+orgId+":"+deviceType+":"+device;

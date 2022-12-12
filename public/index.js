@@ -2,8 +2,8 @@
 // show a message with a type of the input
 function showMessage(input, message, type) {
     // get the small element and set the message
-    const msg = input.parentNode.querySelector("small");
-    msg.innerText = message;
+    /*const msg = input.parentNode.querySelector("small");
+    msg.innerText = message;*/
     // update the class for the input
     input.className = type ? "success" : "error";
     return type;
@@ -30,7 +30,7 @@ var isIOSDevice = false;
 function getTypeMobileDevice(){
 		
     var ua = navigator.userAgent;
-    console.log(ua);
+    //console.log(ua);
     var checker = {
     iphone: ua.match(/(iPhone|iPod|iPad)/),
     android: ua.match(/Android/)
@@ -54,18 +54,14 @@ var configureForm;
 document.addEventListener('DOMContentLoaded',
 function(event){
 
-    console.log("DOMContentLoaded!");
     // hide connect and table
     $("#publish,#metricstable").hide();
-    console.log(document);
     configureForm = document.querySelector('#configure-form');
-    console.log(configureForm);
 
 const DEVICETYPE_REQUIRED = "Enter device type name that you created in Monitor setup";
 const DEVICE_REQUIRED = "Enter device name that you created in Monitor setup";
 const DEVICE_PASSWORD_REQUIRED = "Enter device password that was set or generated in Monitor setup";
 const MSG_HOSTNAME_REQUIRED = "Enter MAS messaging hostname";
-const MSG_HOSTNAME_INVALID = "Invalid DNS hostname for MAS messaging";
 
 configureForm.addEventListener("submit", function (event) {
     // stop form submission
@@ -102,9 +98,8 @@ configureForm.addEventListener("submit", function (event) {
         orgId = arr[0];
         console.log("orgId: " + orgId);
     }
-    if (deviceTypeValid && deviceValid && devicePasswordValid && msgHostnameValid) {
+    if (deviceTypeValid && deviceValid && devicePasswordValid && msgHostnameValid && orgId) {
         
-        console.log("configuration valid");
         getMqttClient();
 
         getTypeMobileDevice();
