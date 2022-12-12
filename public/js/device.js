@@ -87,7 +87,7 @@ function publish() {
 			 console.log("[%s] Published", new Date().getTime());
 		}
 		catch (err) {
-			isConnected = false;
+			isDeviceConnected = false;
 			document.getElementById("connectionImage").src="/images/disconnected.svg";
 			document.getElementById("connection").innerHTML = "Disconnected";
 			setTimeout(connectDevice(mqttClient), 1000);
@@ -101,7 +101,6 @@ function onConnectSuccess(){
 	isDeviceConnected = true;
 	document.getElementById("connectionImage").src="/images/connected.svg";
 	document.getElementById("connection").innerHTML = "Connected";
-	document.querySelector('#connectbutton').disabled = true;
 	$("#publish,#metricstable").show('slow');
 
 	if (navigator.geolocation) {
@@ -118,7 +117,7 @@ function onConnectFailure(){
 function connectDevice(mqttClient){
 	document.getElementById("connectionImage").src="/images/connecting.svg";
 	document.getElementById("connection").innerHTML = "Connecting";
-	
+
 	mqttClient.connect({
 		onSuccess: onConnectSuccess,
 		onFailure: onConnectFailure,
