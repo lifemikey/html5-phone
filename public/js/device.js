@@ -108,15 +108,29 @@ function onConnectSuccess(){
 	}
 }
 
-function onConnectFailure(){
+
+// TODO   called when the client loses its connection
+function onConnectionLost(responseObject) {
+	if (responseObject.errorCode !== 0) {
+	  console.log("onConnectionLost:"+responseObject.errorMessage);
+	}
+  }
+
+function onConnectFailure(responseObject){
 	// The device failed to connect. Let's try again in one second.
 	console.log("Could not connect to MAS! Trying again in 1 second.");
+	if (responseObject.errorCode !== 0) {
+		document.getElementById("connectErrorMsg").innerHTML = responseObject.errorMessage;
+		$("#connectError").show();
+		console.log("onConnectionFailure:"+responseObject.errorMessage);
+	}
 	setTimeout(connectDevice(mqttClient), 1000);
 }
 
 function connectDevice(mqttClient){
 	document.getElementById("connectionImage").src="/images/connecting.svg";
 	document.getElementById("connection").innerHTML = "Connecting";
+	$("#connectStatus").show();
 
 	mqttClient.connect({
 		onSuccess: onConnectSuccess,
@@ -124,7 +138,7 @@ function connectDevice(mqttClient){
 		userName: "use-token-auth",
 		password: devicePassword,
 		useSSL: true
-	});
+	}); 
 }
 
 var updatePersonalLocation = function(position) {

@@ -55,7 +55,7 @@ document.addEventListener('DOMContentLoaded',
 function(event){
 
     // hide connect and table
-    $("#publish,#metricstable").hide();
+    $("#connectStatus,#connectError,#publish,#metricstable").hide();
     configureForm = document.querySelector('#configure-form');
 
 const DEVICETYPE_REQUIRED = "Enter device type name that you created in Monitor setup";

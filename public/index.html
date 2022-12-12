@@ -70,12 +70,17 @@
 		</form>
 
 	<div class="outer-main">
-		<div id="publish" class="main">
+		<div id="connectStatus" class="main">
 			<br>
 			<p style="padding-top:10px">
     			<img id="connectionImage" src="images/disconnected.svg" class="iot-connected-image" style="vertical-align:middle">
     			<span id="connection">Disconnected</span>
-			</p>​
+			</p>
+		</div>
+		<div id="connectError" class="main" color="red">
+		<h4><span id="connectErrorMsg"></h4>
+		</div>
+		<div id="publish" class="main">​
 			<h3>Published Messages: <span id='msgCount'></h3>
 		</div>
 		<div class="main" id="metricstable">
